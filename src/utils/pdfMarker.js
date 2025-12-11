@@ -3,14 +3,40 @@ const pdf = require("pdf-creator-node");
 const FormData = require("form-data");
 const fs = require("fs");
 require("dotenv").config();
-const { createCanvas, loadImage } = require("canvas");
 const path = require("path");
 
 const moment = require("moment-timezone");
 const { generateUUID } = require("./helper");
 
+// Try to load canvas, but make it optional for serverless environments
+let createCanvas, loadImage;
+try {
+  const canvas = require("canvas");
+  createCanvas = canvas.createCanvas;
+  loadImage = canvas.loadImage;
+} catch (error) {
+  console.warn(
+    "Canvas module not available. Image conversion features will be limited."
+  );
+}
+
 async function convertDataUriToPngBase64(dataUri) {
   try {
+    if (!createCanvas || !loadImage) {
+      // Fallback: If canvas is not available, extract base64 directly
+      console.warn("Canvas not available, using direct base64 extraction");
+      const matches = dataUri.match(/^data:image\/png;base64,(.*)$/);
+      if (matches && matches[1]) {
+        return matches[1];
+      }
+      // If it's not PNG, try to extract any base64 data
+      const base64Match = dataUri.match(/^data:image\/[^;]+;base64,(.*)$/);
+      if (base64Match && base64Match[1]) {
+        return base64Match[1];
+      }
+      throw new Error("Unable to extract base64 data from URI");
+    }
+
     const canvas = createCanvas();
     const ctx = canvas.getContext("2d");
 
