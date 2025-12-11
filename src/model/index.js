@@ -1,6 +1,17 @@
 const { Sequelize, DataTypes } = require("sequelize");
 require("dotenv").config();
 
+// Check if DB_CONNECTION_STRING is defined
+if (!process.env.DB_CONNECTION_STRING) {
+  console.error(
+    "FATAL ERROR: DB_CONNECTION_STRING environment variable is not defined!"
+  );
+  console.error(
+    "Please set DB_CONNECTION_STRING in your environment variables."
+  );
+  process.exit(1);
+}
+
 const sequelize = new Sequelize(process.env.DB_CONNECTION_STRING, {
   logging: false,
   dialectOptions: {
