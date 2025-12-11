@@ -1,0 +1,162 @@
+{
+  "/v1/u4wtD/vNuRdaH7zqkHQfk": {
+    "post": {
+      "summary": "Step 1: Upload pdf file to generate pdf link and paste the received url in next api to generate sop flow diagram",
+      "description": "Step 1: Upload pdf file to generate pdf link and paste the received url in next api to generate sop flow diagram",
+      "tags": ["Generate sop flow diagram with AI"],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "file": {
+                  "type": "string",
+                  "format": "binary",
+                  "description": "PDF file to be uploaded"
+                }
+              },
+              "required": ["file"]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "File uploaded successfully"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string",
+                    "example": "Invalid request"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "An internal error occurred"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ]
+    }
+  },
+  "/v1/hI1Ev/vbTAQ5LPXWXKZ4Z": {
+    "post": {
+      "summary": "Step 2: Paste received file url to generate sop flow diagram",
+      "description": "Step 2: Paste received file url to generate sop flow diagram",
+      "tags": ["Generate sop flow diagram with AI"],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "FileUrl": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "File URL to be uploaded"
+                }
+              },
+              "required": ["FileUrl"]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "Sop flow generated successfully"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string",
+                    "example": "Invalid request"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "An internal error occurred"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ]
+    }
+  }
+}

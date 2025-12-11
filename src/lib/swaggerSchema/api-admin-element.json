@@ -1,0 +1,358 @@
+{
+  "/v1/I6VF3/Ab9X4zQyWvE1TgR": {
+    "post": {
+      "summary": "Create or update an Element Attribute Type",
+      "description": "Create a new or update an existing Element Attribute Type with reviewers, approvers, stakeholders, and escalation users.",
+      "tags": ["Element Attribute Type"],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ElementAttributeTypeID": {
+                  "type": "string",
+                  "format": "uuid",
+                  "description": "Optional ID for updating an existing attribute type"
+                },
+                "ModuleTypeID": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "Name": {
+                  "type": "string"
+                },
+                "Description": {
+                  "type": "string"
+                },
+                "IsReview": {
+                  "type": "boolean"
+                },
+                "Reviewers": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "IsApproval": {
+                  "type": "boolean"
+                },
+                "Approvers": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "IsStakeholder": {
+                  "type": "boolean"
+                },
+                "Stakeholders": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "IsEscalation": {
+                  "type": "boolean"
+                },
+                "EscalationUsers": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "EscalationType": {
+                  "type": "string",
+                  "enum": [
+                    "Minutes",
+                    "Hours",
+                    "Days",
+                    "Weeks",
+                    "Months",
+                    "Years"
+                  ]
+                },
+                "EscalationAfter": {
+                  "type": "integer"
+                },
+                "IsDownloadable": {
+                  "type": "boolean"
+                },
+                "DownloadableUsers": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "IsExpiry": {
+                  "type": "boolean"
+                },
+                "ExpiryDate": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "IsEmailTrigger": {
+                  "type": "boolean"
+                },
+                "IsAutoPublish": {
+                  "type": "boolean"
+                },
+                "ReviewNotificationInterval": {
+                  "type": "integer"
+                }
+              },
+              "required": ["ModuleTypeID", "Name"]
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Created or Updated successfully",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "Attribute Created successfully"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "ElementAttributeTypeID": {
+                        "type": "string",
+                        "format": "uuid"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "Something went wrong!"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ]
+    }
+  },
+
+  "/v1/I6VF3/Lm6R8bKtUvY3QnJ": {
+    "post": {
+      "summary": "List Element Attribute Types",
+      "description": "Lists element attribute types with optional pagination and search.",
+      "tags": ["Element Attribute Type"],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ModuleTypeID": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "IsPagination": {
+                  "type": "boolean"
+                },
+                "Page": {
+                  "type": "integer",
+                  "default": 1
+                },
+                "PageSize": {
+                  "type": "integer",
+                  "default": 10
+                },
+                "SortField": {
+                  "type": "string",
+                  "default": "CreatedDate"
+                },
+                "SortOrder": {
+                  "type": "string",
+                  "default": "DESC",
+                  "enum": ["ASC", "DESC"]
+                },
+                "Search": {
+                  "type": "string"
+                }
+              },
+              "required": ["ModuleTypeID"]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "List retrieved successfully",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "Attributes fetched successfully"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "elementAttributes": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "ElementAttributeTypeID": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "Name": { "type": "string" }
+                          }
+                        }
+                      },
+                      "pagination": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error"
+        }
+      },
+      "security": [{ "bearerAuth": [] }]
+    }
+  },
+
+  "/v1/I6VF3/Zp0FcWdNtYo2HvL": {
+    "post": {
+      "summary": "View Element Attribute Type",
+      "description": "View a specific element attribute type with associated users.",
+      "tags": ["Element Attribute Type"],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ElementAttributeTypeID": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "required": ["ElementAttributeTypeID"]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Element Attribute fetched successfully",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "Attribute fetched successfully"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "elementAttribute": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error"
+        }
+      },
+      "security": [{ "bearerAuth": [] }]
+    }
+  },
+
+  "/v1/I6VF3/Dj5SaEpBxKw7RmC": {
+    "post": {
+      "summary": "Delete Element Attribute Type",
+      "description": "Marks an element attribute type and its users as deleted.",
+      "tags": ["Element Attribute Type"],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ElementAttributeTypeID": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "required": ["ElementAttributeTypeID"]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Element Attribute deleted successfully",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "Attribute deleted successfully"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error"
+        }
+      },
+      "security": [{ "bearerAuth": [] }]
+    }
+  }
+}

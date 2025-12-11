@@ -1,0 +1,233 @@
+{
+    "/v1/J2nve/ZmKEWezRqWA5e9B": {
+        "post": {
+            "summary": "Configure settings",
+            "description": "Configure settings for the enterprise",
+            "tags": [
+                "System"
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "FieldName1": {
+                                    "type": "string",
+                                    "description": "Field Value 1"
+                                },
+                                "FieldName2": {
+                                    "type": "string",
+                                    "description": "Field Value 2"
+                                }
+                            },
+                            "required":false
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "System configuration updated successfully'"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "example": "Invalid request"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "Internal Server Error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "An internal error occurred"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ]
+        }
+    },
+    "/v1/J2nve/D5hGngPZ8fwvdve": {
+        "post": {
+            "summary": "Configure settings for cloude",
+            "description": "Configure settings for the enterprise",
+            "tags": [
+                "System"
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "FieldName1": {
+                                    "type": "string",
+                                    "description": "Field Value 1"
+                                },
+                                "FieldName2": {
+                                    "type": "string",
+                                    "description": "Field Value 2"
+                                }
+                            },
+                            "required":false
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "System configuration updated successfully'"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "example": "Invalid request"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "Internal Server Error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "An internal error occurred"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ]
+        }
+    },
+    "/v1/J2nve/bywT3cLZRVfujK7": {
+        "post": {
+            "summary": "Get System Cofigures",
+            "description": "Get System Cofigures for the enterprise",
+            "tags": [
+                "System"
+            ],
+            "requestBody": {
+                "required": false
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "example": "Invalid request"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "Internal Server Error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "An internal error occurred"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ]
+        }
+    }
+}

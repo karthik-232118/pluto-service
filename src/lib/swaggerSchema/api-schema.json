@@ -1,0 +1,1536 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "PLUTO REST API",
+    "version": "1.0.0",
+    "description": "Pluto Rest API Description"
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/v1/hI1Ev/MIZrIxByZj3PsO5": {
+      "post": {
+        "summary": "Create or update a document module",
+        "description": "Creates a new document module or updates an existing one.",
+        "tags": ["Document Module"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ModuleTypeID": {
+                    "type": "UUID",
+                    "description": "The type of the module.",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "ContentID": {
+                    "type": "UUID",
+                    "description": "ID of the related content.",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "DocumentID": {
+                    "type": "UUID",
+                    "description": "The ID of the document being updated (optional for creating a new document).",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "DocumentName": {
+                    "type": "string",
+                    "description": "The name of the document.",
+                    "example": "New Document"
+                  },
+                  "DocumentDescription": {
+                    "type": "string",
+                    "description": "The description of the document.",
+                    "example": "This is a test document."
+                  },
+                  "DocumentIsActive": {
+                    "type": "boolean",
+                    "description": "Whether the document is active.",
+                    "example": true
+                  },
+                  "DocumentTags": {
+                    "type": "string",
+                    "description": "Comma-separated tags for the document.",
+                    "example": "tag1,tag2"
+                  },
+                  "DocumentOwner": {
+                    "type": "string",
+                    "description": "The name of the document owner.",
+                    "example": "Owner name"
+                  },
+                  "Checker": {
+                    "type": "array",
+                    "items": {
+                      "type": "UUID"
+                    },
+                    "description": "An array of user UUIDs assigned as checkers for the document.",
+                    "example": ["xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"]
+                  },
+                  "EscalationPerson": {
+                    "type": "array",
+                    "items": {
+                      "type": "UUID"
+                    },
+                    "description": "An array of user UUIDs assigned for escalation.",
+                    "example": ["xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"]
+                  },
+                  "EscalationType": {
+                    "type": "string",
+                    "description": "The type of escalation (\"Minutes\", \"Hours\",\"Days\", \"Weeks\", \"Months\", \"Years\")",
+                    "enum": ["Minutes","Hours","Days", "Weeks", "Months", "Years"],
+                    "example": "time-based"
+                  },
+                  "EscalationAfter": {
+                    "type": "integer",
+                    "description": "Number of hours after which escalation should occur.",
+                    "example": 48
+                  },
+                  "SelfApproved": {
+                    "type": "boolean",
+                    "description": "Whether the document is self-approved.",
+                    "example": false
+                  },
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "(PDF) Mandatory to upload related to the document."
+                  }
+                }
+              },
+              "required": [
+                "ModuleTypeID",
+                "ContentID",
+                "DocumentName",
+                "DocumentIsActive",
+                "SelfApproved",
+                "DocumentOwner"
+              ],
+              "oneOf": [
+                {
+                  "properties": {
+                    "SelfApproved": {
+                      "const": true
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "SelfApproved": {
+                      "const": false
+                    },
+                    "Checker": {
+                      "type": "array"
+                    },
+                    "EscalationPerson": {
+                      "type": "array"
+                    },
+                    "EscalationType": {
+                      "type": "string"
+                    },
+                    "EscalationAfter": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "Checker",
+                    "EscalationPerson",
+                    "EscalationType",
+                    "EscalationAfter"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Document created successfully."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/hI1Ev/c8ws3tuvxZuYY8R": {
+      "post": {
+        "summary": "Publish document module",
+        "description": "Publish document module and adjusts its master version.",
+        "tags": ["Document Module"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ModuleTypeID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique ID of the document",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "DocumentID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique ID of the document",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "ContentID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique ID of the parent element of the document",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  }
+                },
+                "required": ["ModuleTypeID", "DocumentID", "ContentID"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Document Module Status updated successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "DocumentID or ContentID or ModuleTypeId does not exist"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "An internal error occurred"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/hI1Ev/daHHQfkkvNuq7zR": {
+      "post": {
+        "summary": "Create or update a Skill Building module",
+        "description": "Creates a new Skill Building module or updates an existing one.",
+        "tags": ["Skill Building Module"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ModuleTypeID": {
+                    "type": "UUID",
+                    "description": "The type of the module.",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "ContentID": {
+                    "type": "UUID",
+                    "description": "ID of the related content.",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "TrainingSimulationID": {
+                    "type": "UUID",
+                    "description": "The ID of the Skill Building being updated (optional for creating a new Skill Building).",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "TrainingSimulationName": {
+                    "type": "string",
+                    "description": "The name of the Skill Building.",
+                    "example": "New Skill Building"
+                  },
+                  "TrainingSimulationDescription": {
+                    "type": "string",
+                    "description": "The description of the Skill Building.",
+                    "example": "This is a test Skill Building."
+                  },
+                  "TrainingSimulationIsActive": {
+                    "type": "boolean",
+                    "description": "Whether the Skill Building is active.",
+                    "example": true
+                  },
+                  "TrainingSimulationTags": {
+                    "type": "string",
+                    "description": "Comma-separated tags for the Skill Building.",
+                    "example": "tag1,tag2"
+                  },
+                  "TrainingSimulationOwner": {
+                    "type": "string",
+                    "description": "The name of the Skill Building owner.",
+                    "example": "Owner name"
+                  },
+                  "Checker": {
+                    "type": "array",
+                    "items": {
+                      "type": "UUID"
+                    },
+                    "description": "An array of user UUIDs assigned as checkers for the document.",
+                    "example": ["xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"]
+                  },
+                  "EscalationPerson": {
+                    "type": "array",
+                    "items": {
+                      "type": "UUID"
+                    },
+                    "description": "An array of user UUIDs assigned for escalation.",
+                    "example": ["xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"]
+                  },
+                  "EscalationType": {
+                    "type": "string",
+                    "description": "The type of escalation (\"Minutes\", \"Hours\", \"Days\", \"Weeks\", \"Months\", \"Years\")",
+                    "enum": ["Minutes","Hours","Days", "Weeks", "Months", "Years"],
+                    "example": "time-based"
+                  },
+                  "EscalationAfter": {
+                    "type": "integer",
+                    "description": "Number of hours after which escalation should occur.",
+                    "example": 48
+                  },
+                  "SelfApproved": {
+                    "type": "boolean",
+                    "description": "Whether the document is self-approved.",
+                    "example": false
+                  },
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "(ZIP) Mandatory to upload related to the document."
+                  }
+                }
+              },
+              "required": [
+                "ModuleTypeID",
+                "ContentID",
+                "TrainingSimulationName",
+                "TrainingSimulationIsActive",
+                "SelfApproved",
+                "TrainingSimulationOwner"
+              ],
+              "oneOf": [
+                {
+                  "properties": {
+                    "SelfApproved": {
+                      "const": true
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "SelfApproved": {
+                      "const": false
+                    },
+                    "Checker": {
+                      "type": "array"
+                    },
+                    "EscalationPerson": {
+                      "type": "array"
+                    },
+                    "EscalationType": {
+                      "type": "string"
+                    },
+                    "EscalationAfter": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "Checker",
+                    "EscalationPerson",
+                    "EscalationType",
+                    "EscalationAfter"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Skill Building created successfully."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/hI1Ev/bxQbbCR2rGOhhUq": {
+      "post": {
+        "summary": "Publish Skill Building module",
+        "description": "Publish Skill Building module and adjusts its master version.",
+        "tags": ["Skill Building Module"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ModuleTypeID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique ID of the Skill Building",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "TrainingSimulationID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique ID of the Skill Building",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "ContentID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique ID of the parent element of the Skill Building",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  }
+                },
+                "required": [
+                  "ModuleTypeID",
+                  "TrainingSimulationID",
+                  "ContentID"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Skill Building Module Status updated successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "DocumentID or ContentID or ModuleTypeId does not exist"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "An internal error occurred"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/hI1Ev/xo0uYREJIJe91bR": {
+      "post": {
+        "summary": "Create or update a Skill Assessment module",
+        "description": "Creates a new Skill Assessment module or updates an existing one.",
+        "tags": ["Skill Assessment Module"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ModuleTypeID": {
+                    "type": "UUID",
+                    "description": "The type of the module.",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "ContentID": {
+                    "type": "UUID",
+                    "description": "ID of the related content.",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "TestSimulationID": {
+                    "type": "UUID",
+                    "description": "The ID of the Skill Assessment being updated (optional for creating a new Skill Assessment).",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "TestSimulationName": {
+                    "type": "string",
+                    "description": "The name of the Skill Assessment.",
+                    "example": "New Skill Assessment"
+                  },
+                  "TestSimulationDescription": {
+                    "type": "string",
+                    "description": "The description of the Skill Assessment.",
+                    "example": "This is a test Skill Assessment."
+                  },
+                  "TestSimulationIsActive": {
+                    "type": "boolean",
+                    "description": "Whether the Skill Assessment is active.",
+                    "example": true
+                  },
+                  "TestSimulationTags": {
+                    "type": "string",
+                    "description": "Comma-separated tags for the Skill Assessment.",
+                    "example": "tag1,tag2"
+                  },
+                  "TestSimulationOwner": {
+                    "type": "string",
+                    "description": "The name of the Skill Assessment owner.",
+                    "example": "Owner name"
+                  },
+                  "Checker": {
+                    "type": "array",
+                    "items": {
+                      "type": "UUID"
+                    },
+                    "description": "An array of user UUIDs assigned as checkers for the document.",
+                    "example": ["xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"]
+                  },
+                  "EscalationPerson": {
+                    "type": "array",
+                    "items": {
+                      "type": "UUID"
+                    },
+                    "description": "An array of user UUIDs assigned for escalation.",
+                    "example": ["xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"]
+                  },
+                  "EscalationType": {
+                    "type": "string",
+                    "description": "The type of escalation (\"Minutes\", \"Hours\", \"Days\", \"Weeks\", \"Months\", \"Years\")",
+                    "enum": ["Minutes","Hours","Days", "Weeks", "Months", "Years"],
+                    "example": "time-based"
+                  },
+                  "EscalationAfter": {
+                    "type": "integer",
+                    "description": "Number of hours after which escalation should occur.",
+                    "example": 48
+                  },
+                  "SelfApproved": {
+                    "type": "boolean",
+                    "description": "Whether the document is self-approved.",
+                    "example": false
+                  },
+                  "TotalAttempts": {
+                    "type": "integer",
+                    "description": "Number of attempts of Skill Assessment.",
+                    "example": 10
+                  },
+                  "PassPercentage": {
+                    "type": "integer",
+                    "description": "Pass Percentage of Skill Assessment.",
+                    "example": 10
+                  },
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "(ZIP) Mandatory to upload related to the document."
+                  }
+                }
+              },
+              "required": [
+                "ModuleTypeID",
+                "ContentID",
+                "TestSimulationName",
+                "TestSimulationIsActive",
+                "SelfApproved",
+                "TestSimulationOwner"
+              ],
+              "oneOf": [
+                {
+                  "properties": {
+                    "SelfApproved": {
+                      "const": true
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "SelfApproved": {
+                      "const": false
+                    },
+                    "Checker": {
+                      "type": "array"
+                    },
+                    "EscalationPerson": {
+                      "type": "array"
+                    },
+                    "EscalationType": {
+                      "type": "string"
+                    },
+                    "EscalationAfter": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "Checker",
+                    "EscalationPerson",
+                    "EscalationType",
+                    "EscalationAfter"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Skill Assessment created successfully."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/hI1Ev/spB4t1pugF9hnU3": {
+      "post": {
+        "summary": "Publish Skill Assessment module",
+        "description": "Publish Skill Assessment module and adjusts its master version.",
+        "tags": ["Skill Assessment Module"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ModuleTypeID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique ID of the document",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "TestSimulationID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique ID of the Skill Assessment",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "ContentID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique ID of the parent element of the document",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  }
+                },
+                "required": ["ModuleTypeID", "TestSimulationID", "ContentID"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Skill Assessment Module Status updated successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "DocumentID or ContentID or ModuleTypeId does not exist"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "An internal error occurred"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/hI1Ev/dedg7DwY10Bpp4h": {
+      "post": {
+        "summary": "Create or update a SOP module",
+        "description": "Creates a new SOP module or updates an existing one.",
+        "tags": ["SOP Module"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ModuleTypeID": {
+                    "type": "UUID",
+                    "description": "The type of the module.",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "ContentID": {
+                    "type": "UUID",
+                    "description": "ID of the related content.",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "SOPID": {
+                    "type": "UUID",
+                    "description": "The ID of the SOP being updated (optional for creating a new SOP).",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "SOPName": {
+                    "type": "string",
+                    "description": "The name of the SOP.",
+                    "example": "New SOP Simulation"
+                  },
+                  "SOPDescription": {
+                    "type": "string",
+                    "description": "The description of the SOP.",
+                    "example": "This is a test SOP."
+                  },
+                  "SOPIsActive": {
+                    "type": "boolean",
+                    "description": "Whether the SOP is active.",
+                    "example": true
+                  },
+                  "SOPTags": {
+                    "type": "string",
+                    "description": "Comma-separated tags for the SOP.",
+                    "example": "tag1,tag2"
+                  },
+                  "SOPOwner": {
+                    "type": "string",
+                    "description": "The name of the SOP owner.",
+                    "example": "Owner name"
+                  },
+                  "Checker": {
+                    "type": "array",
+                    "items": {
+                      "type": "UUID"
+                    },
+                    "description": "An array of user UUIDs assigned as checkers for the document.",
+                    "example": ["xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"]
+                  },
+                  "EscalationPerson": {
+                    "type": "array",
+                    "items": {
+                      "type": "UUID"
+                    },
+                    "description": "An array of user UUIDs assigned for escalation.",
+                    "example": ["xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"]
+                  },
+                  "EscalationType": {
+                    "type": "string",
+                    "description": "The type of escalation (\"Minutes\", \"Hours\",\"Days\", \"Weeks\", \"Months\", \"Years\")",
+                    "enum": ["Minutes", "Hours", "Days", "Weeks", "Months", "Years"],
+                    "example": "time-based"
+                  },
+                  "EscalationAfter": {
+                    "type": "integer",
+                    "description": "Number of hours after which escalation should occur.",
+                    "example": 48
+                  },
+                  "SelfApproved": {
+                    "type": "boolean",
+                    "description": "Whether the document is self-approved.",
+                    "example": false
+                  }
+                }
+              },
+              "required": [
+                "ModuleTypeID",
+                "ContentID",
+                "SOPName",
+                "SOPIsActive",
+                "SelfApproved",
+                "SOPOwner"
+              ],
+              "oneOf": [
+                {
+                  "properties": {
+                    "SelfApproved": {
+                      "const": true
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "SelfApproved": {
+                      "const": false
+                    },
+                    "Checker": {
+                      "type": "array"
+                    },
+                    "EscalationPerson": {
+                      "type": "array"
+                    },
+                    "EscalationType": {
+                      "type": "string"
+                    },
+                    "EscalationAfter": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "Checker",
+                    "EscalationPerson",
+                    "EscalationType",
+                    "EscalationAfter"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "SOP created successfully."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/hI1Ev/kDBfR5jCNpgS0zO": {
+      "post": {
+        "summary": "Publish SOP module",
+        "description": "Publish SOP module and adjusts its master version.",
+        "tags": ["SOP Module"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ModuleTypeID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique ID of the document",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "SOPID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique ID of the document",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "ContentID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique ID of the parent element of the document",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  }
+                },
+                "required": ["ModuleTypeID", "SOPID", "ContentID"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "SOP Module Status updated successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "SOPID or ContentID or ModuleTypeId does not exist"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "An internal error occurred"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/hI1Ev/qxZrQraP39O6qmr": {
+      "post": {
+        "summary": "Create and update category",
+        "description": "Create  and updatecategory under module and folder.",
+        "tags": ["Category"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ModuleTypeID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "(Mandatory) Unique ID of the document",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "ParentContentID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique ID of the document",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "ContentID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique ID of the parent element of the document",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "ContentName": {
+                    "type": "string",
+                    "description": "(Mandatory) Name of the category",
+                    "example": "Category Name"
+                  },
+                  "ContentDescription": {
+                    "type": "string",
+                    "description": "Description of the category",
+                    "example": "Category Description"
+                  },
+                  "CategoryStatus": {
+                    "type": "boolean",
+                    "description": "(Mandatory) Active status of the category",
+                    "example": true
+                  }
+                },
+                "required": ["ModuleTypeID"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Category created/updated successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "ParentContentID or ContentID or ModuleTypeId does not exist"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "An internal error occurred"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/hI1Ev/PcerQraP39Ojqnt": {
+      "post": {
+        "summary": "Change category active inactive status",
+        "description": "Change category active inactive status under module and folder.",
+        "tags": ["Category"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ModuleTypeID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "(Mandatory) Unique ID of the document",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "ParentContentID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique ID of the document",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "ContentID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique ID of the parent element of the document",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "CategoryStatus": {
+                    "type": "boolean",
+                    "description": "(Mandatory) Active status of the category",
+                    "example": true
+                  }
+                },
+                "required": ["ModuleTypeID", "ContentID", "ParentContentID"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Category created/updated successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "ParentContentID or ContentID or ModuleTypeId does not exist"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "An internal error occurred"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/hI1Ev/OtbrQraP39Olpaz": {
+      "post": {
+        "summary": "Delete category",
+        "description": "Delete category under module and folder.",
+        "tags": ["Category"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ModuleTypeID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "(Mandatory) Unique ID of the document",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "ParentContentID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique ID of the document",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  },
+                  "ContentID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique ID of the parent element of the document",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  }
+                },
+                "required": ["ModuleTypeID", "ContentID", "ParentContentID"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Category created/updated successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "ParentContentID or ContentID or ModuleTypeId does not exist"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "An internal error occurred"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  }
+}

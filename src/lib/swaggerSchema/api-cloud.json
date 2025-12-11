@@ -1,0 +1,154 @@
+{
+    "/v1/ylwAv/wgVVJMPxGAcdSrC": {
+        "post": {
+            "summary": "Get Element List from OneDrive",
+            "description": "View List of all the elements from OneDrive",
+            "tags": [
+                "Cloud"
+            ],
+            "requestBody": {
+                "required": false
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "System configuration updated successfully'"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "example": "Invalid request"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "Internal Server Error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "An internal error occurred"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ]
+        }
+    },
+    "/v1/ylwAv/rGqObchk114KPvg": {
+        "post": {
+            "summary": "Update Elements from OneDrive",
+            "description": "Update Elements from OneDrive",
+            "tags": [
+                "Cloud"
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "ContentID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "Content ID of the element",
+                                    "example": "654321ab-cdef-4567-890a-bcdef1234567"
+                                }
+                            }
+                        },
+                        "required": [
+                            "ContentID"
+                        ]
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": ""
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "example": "Invalid request"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "Internal Server Error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "An internal error occurred"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ]
+        }
+    }
+}

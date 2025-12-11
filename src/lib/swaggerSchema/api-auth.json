@@ -1,0 +1,112 @@
+{
+    "/v1/iCR2Y/WAcHyl8tPFhlipo": {
+        "post": {
+            "summary": "Verify Token",
+            "tags": [
+                "Authorization"
+            ],
+            "requestBody": {
+                "required": false
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "example": "Invalid request"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "Internal Server Error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "An internal error occurred"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "/v1/iCR2Y/X918ByG1hVUKatj": {
+        "post": {
+            "summary": "Logout",
+            "tags": [
+                "Authorization"
+            ],
+            "requestBody": {
+                "required": false
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "example": "Invalid request"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "Internal Server Error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "An internal error occurred"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

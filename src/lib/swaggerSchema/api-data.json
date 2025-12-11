@@ -1,0 +1,2073 @@
+{
+    "/v1/rXos1/U6W9W1FZaOrJy6c": {
+        "post": {
+            "tags": [
+                "Users"
+            ],
+            "summary": "Get Users Details",
+            "requestBody": {
+                "required": false
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "type": "object",
+                                        "properties": {
+                                            "UserID": {
+                                                "type": "string",
+                                                "format": "uuid"
+                                            },
+                                            "UserName": {
+                                                "type": "string"
+                                            },
+                                            "UserDetail": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "UserFirstName": {
+                                                        "type": "string"
+                                                    },
+                                                    "UserLastName": {
+                                                        "type": "string"
+                                                    },
+                                                    "UserMiddleName": {
+                                                        "type": "string"
+                                                    },
+                                                    "UserEmail": {
+                                                        "type": "string"
+                                                    },
+                                                    "UserPhoneNumber": {
+                                                        "type": "string"
+                                                    },
+                                                    "UserAddress": {
+                                                        "type": "string"
+                                                    },
+                                                    "UserDateOfBirth": {
+                                                        "type": "string",
+                                                        "format": "date"
+                                                    },
+                                                    "Gender": {
+                                                        "type": "string"
+                                                    },
+                                                    "UserPhoto": {
+                                                        "type": "string"
+                                                    },
+                                                    "UserEmployeeNumber": {
+                                                        "type": "string"
+                                                    },
+                                                    "UserSupervisorID": {
+                                                        "type": "string",
+                                                        "format": "uuid"
+                                                    }
+                                                }
+                                            },
+                                            "UserNotificationConfiguration": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "NotificationTypeForPublish": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "both",
+                                                            "publish",
+                                                            "action"
+                                                        ]
+                                                    },
+                                                    "NotificationTypeForAction": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "both",
+                                                            "action",
+                                                            "publish"
+                                                        ]
+                                                    }
+                                                }
+                                            },
+                                            "UserRoles": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "RoleID": {
+                                                            "type": "string",
+                                                            "format": "uuid"
+                                                        },
+                                                        "RoleName": {
+                                                            "type": "string"
+                                                        },
+                                                        "RoleDescription": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "Internal Server Error"
+                }
+            },
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ]
+        }
+    },
+    "/v1/rXos1/xDO7as9PXrvJ6Jz": {
+        "post": {
+            "tags": [
+                "Elements",
+                "Report"
+            ],
+            "summary": "Get Module Types",
+            "requestBody": {
+                "required": false
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "ModuleTypeID": {
+                                        "type": "string"
+                                    },
+                                    "ModuleName": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request"
+                },
+                "500": {
+                    "description": "Internal Server Error"
+                }
+            },
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ]
+        }
+    },
+    "/v1/rXos1/V8bVW2kDsg3jfTq": {
+        "post": {
+            "tags": [
+                "Elements"
+            ],
+            "summary": "Get Elements (ParentContentID should be null at root level)",
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "ModuleTypeID": {
+                                    "type": "string",
+                                    "description": "The ID representing the type of module"
+                                },
+                                "ParentContentID": {
+                                    "type": "string",
+                                    "description": "The ID of the parent content"
+                                }
+                            },
+                            "required": [
+                                "ModuleTypeID",
+                                "ParentContentID"
+                            ]
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "ContentID": {
+                                            "type": "string"
+                                        },
+                                        "SOPID": {
+                                            "type": "string"
+                                        },
+                                        "SOPName": {
+                                            "type": "string"
+                                        },
+                                        "ModuleName": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Bad Request"
+            },
+            "500": {
+                "description": "Internal Server Error"
+            }
+        },
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ]
+    },
+    "/v1/rXos1/YZOixmmvP7hzltB": {
+        "post": {
+            "tags": [
+                "Elements"
+            ],
+            "summary": "Delete Content Folder",
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "ContentID": {
+                                    "type": "string",
+                                    "description": "The ID of the content"
+                                }
+                            },
+                            "required": [
+                                "ContentID"
+                            ]
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Bad Request"
+            },
+            "500": {
+                "description": "Internal Server Error"
+            }
+        },
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ]
+    },
+    "/v1/rXos1/J4dG8xLpM2aR9eK": {
+        "post": {
+            "tags": [
+                "Module"
+            ],
+            "summary": "Global Search (ModuleTypeIDs will allow empty array)",
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "ModuleTypeIDs": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "uuid"
+                                    }
+                                },
+                                "SearchParam": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "SearchParam"
+                            ]
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Bad Request"
+            },
+            "500": {
+                "description": "Internal Server Error"
+            }
+        },
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ]
+    },
+    "/v1/rXos1/K8pL4eJ9aG7dR2x": {
+        "post": {
+            "tags": [
+                "Users"
+            ],
+            "summary": "Add Or Update User Details",
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "multipart/form-data": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "UserFirstName": {
+                                    "type": "string"
+                                },
+                                "UserLastName": {
+                                    "type": "string"
+                                },
+                                "UserMiddleName": {
+                                    "type": "string"
+                                },
+                                "UserEmail": {
+                                    "type": "string"
+                                },
+                                "UserPhoneNumber": {
+                                    "type": "string"
+                                },
+                                "UserAddress": {
+                                    "type": "string"
+                                },
+                                "UserDateOfBirth": {
+                                    "type": "string",
+                                    "format": "date"
+                                },
+                                "Gender": {
+                                    "type": "string",
+                                    "enum": [
+                                        "male",
+                                        "female",
+                                        "other"
+                                    ]
+                                },
+                                "UserPhoto": {
+                                    "type": "string",
+                                    "format": "binary"
+                                },
+                                "UserEmployeeNumber": {
+                                    "type": "string"
+                                },
+                                "UserSupervisorID": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            },
+                            "required": [
+                                "UserFirstName",
+                                "UserEmail",
+                                "UserEmployeeNumber",
+                                "Gender"
+                            ]
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Bad Request"
+            },
+            "500": {
+                "description": "Internal Server Error"
+            }
+        },
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ]
+    },
+    "/v1/rXos1/h7xR3mL9pG2eK8d": {
+        "post": {
+            "tags": [
+                "Users"
+            ],
+            "summary": "Update User Notification Configuration",
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "NotificationTypeForPublish": {
+                                    "type": "string",
+                                    "enum": [
+                                        "both",
+                                        "publish",
+                                        "action"
+                                    ]
+                                },
+                                "NotificationTypeForAction": {
+                                    "type": "string",
+                                    "enum": [
+                                        "both",
+                                        "publish",
+                                        "action"
+                                    ]
+                                }
+                            },
+                            "required": false
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Bad Request"
+            },
+            "500": {
+                "description": "Internal Server Error"
+            }
+        },
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ]
+    },
+    "/v1/rXos1/RxG3dJ7pL4eM2aK": {
+        "post": {
+            "tags": [
+                "Users"
+            ],
+            "summary": "Change Password",
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "OldPassword": {
+                                    "type": "string"
+                                },
+                                "NewPassword": {
+                                    "type": "string"
+                                },
+                                "ConfirmPassword": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "OldPassword",
+                                "NewPassword",
+                                "ConfirmPassword"
+                            ]
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Bad Request"
+            },
+            "500": {
+                "description": "Internal Server Error"
+            }
+        },
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ]
+    },
+    "/v1/rXos1/MCpHR2eUOOvQLlc": {
+        "post": {
+            "tags": [
+                "Users"
+            ],
+            "summary": "My Achivements API",
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "ModuleType": {
+                                    "type": "string",
+                                     "enum": ["mcqs","test"],
+                                     "description": "Module Type",
+                                     "default": "mcqs"
+                                }
+                            },
+                            "required": [
+                                "ModuleType"
+                            ]
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Bad Request"
+            },
+            "500": {
+                "description": "Internal Server Error"
+            }
+        },
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ]
+    },
+    "/v1/rXos1/X918ByG1hVUKatj": {
+        "post": {
+            "tags": [
+                "Module"
+            ],
+            "summary": "Add User Attempts For Traing Simulation and Skill Assessment",
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "ModuleID": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                },
+                                "IsAncknowledged": {
+                                    "type": "boolean",
+                                    "description": "Is Ancknowledged for Module"
+                                },
+                                "MasterVersion": {
+                                    "type": "string",
+                                    "description": "Master Version of the Module"
+                                }
+                            },
+                            "required": [
+                                "ModuleID"
+                            ]
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "Internal Server Error"
+                }
+            },
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ]
+        }
+    },
+    "/v1/rXos1/G7hJ4xR9pL2eM8d": {
+        "post": {
+            "tags": [
+                "Module"
+            ],
+            "summary": "Get Favorite List",
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "ModuleTypeID": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            },
+                            "required": [
+                                "ModuleTypeID"
+                            ]
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Bad Request",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "error": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "500": {
+                "description": "Internal Server Error"
+            }
+        },
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ]
+    },
+    "/v1/rXos1/L4xG8dJ7pM2aR5k": {
+        "post": {
+            "tags": [
+                "Module"
+            ],
+            "summary": "Add into Favorite List",
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "ModuleTypeID": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                },
+                                "ModuleID": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            },
+                            "required": [
+                                "ModuleTypeID",
+                                "ModuleID"
+                            ]
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Bad Request",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "error": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "500": {
+                "description": "Internal Server Error"
+            }
+        },
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ]
+    },
+    "/v1/rXos1/K3pG9xL7dR2aM8e": {
+        "post": {
+            "summary": "Get Dashboard Data",
+            "description": "All Related Data to Integrate Dashboard",
+            "tags": [
+                "Users"
+            ],
+            "requestBody": {
+                "required": false
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "Internal Server Error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                }
+            },
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ]
+        }
+    },
+    "/v1/rXos1/eZaVeybqDvzlRY5": {
+        "post": {
+            "summary": "Get Leaderboard Toggle Data",
+            "tags": [
+                "Users",
+                "Report"
+            ],
+            "requestBody": {
+                "required": false
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "example": "Invalid request"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "Internal Server Error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "An internal error occurred"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ]
+        }
+    },
+    "/v1/rXos1/ju9HvL0cgGBE8dl": {
+        "post": {
+            "summary": "Get Leaderboard Data of Dashboard",
+            "description": "TestMCQID Or TestSimulationID only one value will allow at once",
+            "tags": [
+                "Users"
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "TestMCQIDs": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "description": "TestMCQID to link with Leaderboard",
+                                        "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                                    }
+                                },
+                                "TestSimulationIDs": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "description": "TestSimulationID to link with Leaderboard",
+                                        "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                                    }
+                                },
+                                "Limit": {
+                                    "type": "integer",
+                                    "description": "Limit of data to fetch"
+                                },
+                                "Page": {
+                                    "type": "integer",
+                                    "description": "Page number of data to fetch"
+                                }
+                            },
+                            "required": false
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "example": "Invalid request"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "Internal Server Error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "An internal error occurred"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ]
+        }
+    },
+    "/v1/rXos1/hUzdVLElM3ATND1": {
+        "post": {
+            "summary": "Get Module Maker Checker Activity",
+            "description": "Single ModuleID allowed at once",
+            "tags": [
+                "Module"
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "SOPID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "SOP ID to link with Checker Activity",
+                                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                                },
+                                "DocumentID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "Document ID to link with Checker Activity",
+                                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                                },
+                                "TestMCQID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "TestMCQ ID to link with Checker Activity",
+                                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                                },
+                                "TrainingSimulationID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "TrainingSimulation ID to link with Checker Activity",
+                                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                                },
+                                "TestSimulationID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "TestSimulation ID to link with Checker Activity",
+                                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                                }
+                            },
+                            "required": false
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "example": "Invalid request"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "Internal Server Error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "An internal error occurred"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ]
+        }
+    },
+    "/v1/rXos1/MbmQksU0GCL0Ip8": {
+        "post": {
+            "summary": "Add User Comment For Checker",
+            "description": "Single ModuleID allowed at once",
+            "tags": [
+                "Module"
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "Comment": {
+                                    "type": "string",
+                                    "description": "Comment for Checker"
+                                },
+                                "SOPID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "SOP ID to link with Checker Activity",
+                                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                                },
+                                "DocumentID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "Document ID to link with Checker Activity",
+                                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                                },
+                                "TestMCQID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "TestMCQ ID to link with Checker Activity",
+                                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                                },
+                                "TrainingSimulationID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "TrainingSimulation ID to link with Checker Activity",
+                                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                                },
+                                "TestSimulationID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "TestSimulation ID to link with Checker Activity",
+                                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                                },
+                                "ApprovalStatus": {
+                                    "type": "string",
+                                    "description": "Approval Status for Checker"
+                                },
+                                "IsReviewSkipped": {
+                                    "type": "boolean",
+                                    "description": "Is Review Skipped for Checker"
+                                }
+                            },
+                            "required": false
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "example": "Invalid request"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "Internal Server Error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "An internal error occurred"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ]
+        }
+    },
+    "/v1/rXos1/U2A7vgGLDXtAntO": {
+        "post": {
+            "summary": "Get Previous Messages",
+            "description": "Module Creater and Assignee User Chat",
+            "tags": [
+                "Module"
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "ModuleID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "Module ID"
+                                },
+                                "ModuleAccessorID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "Module Accessor ID"
+                                },
+                                "Limit": {
+                                    "type": "integer",
+                                    "description": "Limit of data to fetch"
+                                },
+                                "Page": {
+                                    "type": "integer",
+                                    "description": "Page number of data to fetch"
+                                }
+                            },
+                            "required": [
+                                "ModuleID",
+                                "ModuleAccessorID"
+                            ]
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "example": "Invalid request"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "Internal Server Error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "An internal error occurred"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ]
+        }
+    },
+    "/v1/rXos1/spFHbAnUprFi2O1": {
+        "post": {
+            "summary": "Send Message",
+            "description": "Module Creater and Assignee User Chat",
+            "tags": [
+                "Module"
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "RepliedChatID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "Replied Chat ID"
+                                },
+                                "ModuleID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "Module ID"
+                                },
+                                "ModuleCreaterID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "Module Creater ID"
+                                },
+                                "ModuleAccessorID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "Module Accessor ID"
+                                },
+                                "Message": {
+                                    "type": "string",
+                                    "description": "Message to send"
+                                }
+                            },
+                            "required": [
+                                "ModuleID",
+                                "ModuleCreaterID",
+                                "ModuleAccessorID",
+                                "Message"
+                            ]
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "example": "Invalid request"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "Internal Server Error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "An internal error occurred"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ]
+        }
+    },
+    "/v1/rXos1/JawZxkqp6VeqHsw": {
+        "post": {
+            "summary": "Module Owner User List for Chat ",
+            "description": "Module Creater and Assignee User Chat",
+            "tags": [
+                "Module"
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "ModuleID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "Module ID"
+                                }
+                            },
+                            "required": [
+                                "ModuleID"
+                            ]
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "example": "Invalid request"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "Internal Server Error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "An internal error occurred"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ]
+        }
+    },
+    "/v1/rXos1/vVlmQ5gQVv6N4ED": {
+        "post": {
+            "summary": "Get Notes",
+            "description": "Module Note Listing",
+            "tags": [
+                "Module"
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "SearchText": {
+                                    "type": "string",
+                                    "description": "Title of Note"
+                                },
+                                "ModuleTypeID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "Module Type ID"
+                                },
+                                "ModuleID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "Module ID"
+                                }
+                            },
+                            "required": false
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "example": "Invalid request"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "Internal Server Error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "An internal error occurred"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ]
+        }
+    
+    },
+    "/v1/rXos1/GCHJSe90srFmbg8": {
+        "post": {
+            "summary": "Add Notes",
+            "description": "Module Note Creation",
+            "tags": [
+                "Module"
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "Title": {
+                                    "type": "string",
+                                    "description": "Title of Note"
+                                },
+                                "Content": {
+                                    "type": "string",
+                                    "description": "Content of Note"
+                                },
+                                "ModuleTypeID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "Module Type ID"
+                                },
+                                "ModuleID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "Module ID"
+                                },
+                                "MasterVersion": {
+                                    "type": "string",
+                                    "description": "Master Version of the Module"
+                                }
+                            },
+                            "required": [
+                                "Title",
+                                "Content",
+                                "ModuleTypeID",
+                                "ModuleID",
+                                "MasterVersion"
+                            ]
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "example": "Invalid request"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "Internal Server Error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "An internal error occurred"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ]
+        }
+    
+    },
+    "/v1/rXos1/Xp5TBPPuVf2Urow": {
+        "post": {
+            "summary": "Update Notes",
+            "description": "Module Note Updation",
+            "tags": [
+                "Module"
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "NoteID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "Note ID"
+                                },
+                                "Content": {
+                                    "type": "string",
+                                    "description": "Content of Note"
+                                }
+                            },
+                            "required": [
+                                "NoteID",
+                                "Content"
+                            ]
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "example": "Invalid request"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "Internal Server Error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "An internal error occurred"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ]
+        }
+    
+    },
+    "/v1/rXos1/zmbCwPM8tu3ZN6R": {
+        "post": {
+            "summary": "Delete Notes",
+            "description": "Module Note Deletion",
+            "tags": [
+                "Module"
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "NoteID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "Note ID"
+                                }
+                            },
+                            "required": [
+                                "NoteID"
+                            ]
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "example": "Invalid request"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "Internal Server Error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "An internal error occurred"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ]
+        }
+    },
+    "/v1/rXos1/HHCSIkyGXtDFGXt": {
+        "post": {
+            "summary": "Add Risk and Compliences",
+            "description": "Module Risk and Compliences Creation",
+            "tags": [
+                "Module"
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "DocumentID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "Document ID"
+                                },
+                                "DocumentModuleDraftID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "Document Module InProgress ID"
+                                },
+                                "MasterVersion": {
+                                    "type": "string",
+                                    "description": "Master Version of the Module"
+                                },
+                                "DraftVersion": {
+                                    "type": "string",
+                                    "description": "InProgress Version of the Module"
+                                },
+                                "RiskDetailsArrays": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "description": "Risk Details"
+                                    }
+                                },
+                                "ComplianceDetailsArrays": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "description": "Compliance Details"
+                                    }
+                                }
+                            },
+                            "required": [
+                                "DocumentID",
+                                "DocumentModuleDraftID",
+                                "MasterVersion",
+                                "DraftVersion",
+                                "RiskDetailsArrays",
+                                "ComplianceDetailsArrays"
+                            ]
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "example": "Invalid request"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "Internal Server Error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "An internal error occurred"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ]
+        }
+    },
+    "/v1/rXos1/r1jWtjsFxMF14IP": {
+        "post": {
+            "summary": "Get Risk and Complience Details",
+            "description": "Module Risk and Complience Details",
+            "tags": [
+                "Module"
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "RiskAndComplianceID": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "Risk and Compliance ID"
+                                },
+                                "SOPID":{
+                                     "type": "string",
+                                     "format": "uuid",
+                                     "description": "SOP ID"
+                                     }
+                            },
+                            "required": [
+                                "RiskAndComplianceID",
+                                "SOPID"
+                            ]
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "example": "Invalid request"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "Internal Server Error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "An internal error occurred"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ]
+        }
+    }
+}
