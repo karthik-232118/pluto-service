@@ -1,12 +1,14 @@
-FROM node:20-slim
+FROM node:20-bullseye
 
 WORKDIR /app
 
 COPY package*.json ./
 
+# Install build tools + canvas dependencies
 RUN apt-get update && apt-get install -y \
   build-essential \
   python3 \
+  pkg-config \
   libcairo2-dev \
   libpango1.0-dev \
   libjpeg-dev \
@@ -14,10 +16,10 @@ RUN apt-get update && apt-get install -y \
   librsvg2-dev \
   && rm -rf /var/lib/apt/lists/*
 
-# Clean install dependencies (forces rebuild if package.json changes)
+# Install dependencies normally (do NOT force bcrypt build)
 RUN npm install
 
 COPY . .
 
-CMD ["npm","run","start:prod"]
 EXPOSE 4321
+CMD ["npm", "run", "start:prod"]
